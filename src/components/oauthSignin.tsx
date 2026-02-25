@@ -16,11 +16,11 @@ export default function Signin() {
         </button>
       ) : (
         <>
-          <p>Connected as {session.user?.email}</p>
+          <p className="text-gray-800">Connected as {session.user?.email}</p>
 
           <button
             onClick={() => signOut()}
-            className="px-4 py-2 bg-gray-300 rounded"
+            className="px-4 py-2 bg-gray-300 rounded text-gray-900"
           >
             Disconnect
           </button>

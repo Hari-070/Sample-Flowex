@@ -51,7 +51,7 @@ export default function FlowexPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <main className="min-h-screen from-slate-50 to-slate-100">
       <div className="max-w-2xl mx-auto px-6 py-10 space-y-8">
         {/* Header */}
         <header className="flex items-center justify-between">
@@ -82,7 +82,7 @@ export default function FlowexPage() {
 
                 <textarea
                   placeholder="e.g. Schedule a meeting tomorrow at 12 with Arjun and email him the requirements"
-                  className="w-full min-h-[120px] rounded-xl border border-slate-300 p-4 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+                  className="w-full min-h-[120px] rounded-xl border border-slate-300 p-4 text-gray-900 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
                   value={intent}
                   onChange={(e) => setIntent(e.target.value)}
                 />
@@ -117,7 +117,7 @@ export default function FlowexPage() {
                         {issue.message}
                       </label>
                       <input
-                        className="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+                        className="w-full rounded-xl border text-gray-900 border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
                         onChange={(e) =>
                           setUserFixes((prev: any) => ({
                             ...prev,
@@ -190,7 +190,7 @@ export default function FlowexPage() {
                   Task completed successfully 🎉
                 </h3>
 
-                <div className="rounded-xl bg-slate-100 p-4 text-xs overflow-auto max-h-64">
+                <div className="rounded-xl bg-slate-100 text-gray-900 p-4 text-xs overflow-auto max-h-64">
                   <pre>{JSON.stringify(response.result, null, 2)}</pre>
                 </div>
 
