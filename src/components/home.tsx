@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Signin from "./oauthSignin";
 
 export default function HomePage() {
   const [to, setTo] = useState("");
@@ -24,6 +25,17 @@ export default function HomePage() {
       }),
     });
 
+    const calRes = await fetch("/api/agent/calendar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        intent:
+          "Schedule a project review tomorrow from 10am to 11am(Feb 2, 2026)",
+        approved: true,
+      }),
+    });
+    console.log(calRes.status, calRes);
+
     const data = await res.json();
 
     if (data.status === "sent") {
@@ -34,8 +46,64 @@ export default function HomePage() {
     setLoading(false);
   };
 
+  const fetchContact = async () => {
+    const res = await fetch("/api/agent/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "hari",
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+  };
+
+  // const runOrchestrator = async () => {
+  //   const res = await fetch("/api/orchestrator", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       intent:
+  //         "Fix a meeting tomorrow at 12 with Hari Brathosh and mail him the requirements",
+  //       approved: true,
+  //       context: {
+  //         contactName: "Hari Brathosh",
+  //         event: {
+  //           title: "Meeting with Hari",
+  //           description: "Discussion about requirements",
+  //           startDateTime: "2026-02-02T12:00:00+05:30",
+  //           endDateTime: "2026-02-02T13:00:00+05:30",
+  //         },
+  //         email: {
+  //           subject: "Meeting Requirements",
+  //           body: "Please find the requirements for tomorrow’s meeting.",
+  //         },
+  //       },
+  //     }),
+  //   });
+
+  //   console.log(await res.json());
+  // };
+  const runOrchestrator = async () => {
+    const res = await fetch("/api/orchestrator", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        intent:
+          "Fix a meeting tomorrow at 12 with Arjun and mail him the requirements",
+        approved: true,
+      }),
+    });
+
+    console.log(await res.json());
+  };
+
   return (
-    <main className="min-h-screen text-gray-700 bg-gray-100 flex items-center justify-center p-6">
+    <main className="min-h-screen text-gray-700 bg-gray-100 flex flex-col items-center justify-center p-6">
+      <Signin />
       <div className="w-full max-w-lg bg-white p-6 rounded-xl shadow-md space-y-4">
         <h1 className="text-xl font-semibold">Email Agent</h1>
 
@@ -78,13 +146,21 @@ export default function HomePage() {
         </div>
 
         <button
-          onClick={send}
+          onClick={() => {
+            fetchContact();
+          }}
           disabled={loading}
           className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
         >
           {loading ? "Sending..." : "Send Email"}
         </button>
       </div>
+      <button
+        onClick={runOrchestrator}
+        className="px-4 py-3 border rounded m-4 cursor-pointer hover:scale-110 hover:bg-black hover:text-white transition-all"
+      >
+        Test Orchestrator
+      </button>
     </main>
   );
 }
